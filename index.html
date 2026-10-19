@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Naive Fish</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Naive Fish</h1>
+      <p class="sub">A beginner fish learns what is food, poison or junk by tasting things and updating a Naive Bayes classifier.</p>
+    </header>
+
+    <section class="stats">
+      <div class="stat hp">
+        <span class="label">HP</span>
+        <div class="hpbar"><div id="hp-fill"></div></div>
+        <b id="hp-text">100</b>
+      </div>
+      <div class="stat"><span class="label">Eaten</span><b id="eaten">0</b></div>
+      <div class="stat"><span class="label">Fainted</span><b id="fainted">0</b></div>
+      <div class="stat recent"><span class="label">Recent (last 30 decisions)</span><b id="recent">-</b></div>
+      <div class="stat accuracy"><span class="label">Accuracy (food / eaten)</span><b id="accuracy">0 / 0  (0%)</b></div>
+    </section>
+
+    <div class="tank"><canvas id="tank"></canvas></div>
+
+    <section class="controls">
+      <label class="ctl">
+        <span>Laplace smoothing</span>
+        <span class="switch"><input type="checkbox" id="laplace" checked><i></i></span>
+        <em id="laplace-label">ON (alpha = 1)</em>
+      </label>
+      <label class="ctl">
+        <span>Exploration rate</span>
+        <input type="range" id="explore" min="0" max="40" value="12">
+        <em id="explore-val">12%</em>
+      </label>
+      <label class="ctl">
+        <span>Speed</span>
+        <input type="range" id="speed" min="0.5" max="3" step="0.1" value="1">
+        <em id="speed-val">1.0x</em>
+      </label>
+      <button type="button" id="reset" class="reset">Reset fish brain</button>
+    </section>
+
+    <section class="drop">
+      <span>Drop an object:</span>
+      <div id="drop-bar"></div>
+    </section>
+
+    <details class="brain" open>
+      <summary>What the fish has learned</summary>
+      <p class="formula" id="formula-line"></p>
+      <div class="scroll">
+        <table>
+          <thead>
+            <tr><th>Class</th><th>Eaten</th><th>P(class)</th><th>Bright</th><th>Moving</th><th>Small</th><th>Rising</th></tr>
+          </thead>
+          <tbody id="brain-body"></tbody>
+        </table>
+      </div>
+      <p class="hint">Cells show the chance that a feature is "yes" for that class. Turn Laplace OFF and drop a Red pill to watch the fish lock up.</p>
+    </details>
+  </main>
+
+  <script src="bayes.js"></script>
+  <script src="world.js"></script>
+  <script src="draw.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
